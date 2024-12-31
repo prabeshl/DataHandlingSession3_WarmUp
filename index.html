@@ -1,10 +1,9 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Interactive Quiz</title>
+    <title>Session 3 Warm-Up Quiz</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -70,26 +69,55 @@
     <script>
         const quizQuestions = [
             {
-                question: "What is the purpose of a return statement in a function?",
-                options: ["Terminate a function", "Return a value to the caller", "Print a message", "None of the above"],
-                answer: "Return a value to the caller"
-            },
-            {
-                question: "Which of these is a correct function definition in Python?",
-                options: [
-                    "def my_function: return 5",
-                    "def my_function(): return 5",
-                    "function my_function(): return 5",
-                    "function my_function: return 5"
+                "question": "1. What does transposing a dataset typically achieve?",
+                "options": [
+                    "Merges two DataFrames",
+                    "Switches rows and columns",
+                    "Deletes missing data",
+                    "Sorts rows in ascending order"
                 ],
-                answer: "def my_function(): return 5"
+                "answer": "Switches rows and columns"
             },
             {
-                question: "What does the following code do?\ndef add(a, b):\n    return a + b",
-                options: ["Adds two numbers", "Subtracts two numbers", "Multiplies two numbers", "None of the above"],
-                answer: "Adds two numbers"
+                "question": "2. Which method can be used to combine DataFrames by keys?",
+                "options": [
+                    "pd.transpose()",
+                    "pd.merge()",
+                    "df.sort_values()",
+                    "df.dropna()"
+                ],
+                "answer": "pd.merge()"
             },
-            // Additional questions...
+            {
+                "question": "3. What is the purpose of grouping data by a column?",
+                "options": [
+                    "Drop rows with NaN values",
+                    "Create bar charts",
+                    "Perform aggregations (like sum or mean) by category",
+                    "Filter specific rows"
+                ],
+                "answer": "Perform aggregations (like sum or mean) by category"
+            },
+            {
+                "question": "4. Which of the following best describes a vectorized operation?",
+                "options": [
+                    "An operation that loops over rows explicitly",
+                    "A single operation applied element-wise without explicit Python loops",
+                    "A function that sorts rows in the DataFrame",
+                    "An operation that always produces a pivot table"
+                ],
+                "answer": "A single operation applied element-wise without explicit Python loops"
+            },
+            {
+                "question": "5. In a loop processing multiple files, what is a common first step?",
+                "options": [
+                    "Writing a pivot table",
+                    "Checking if the directory/files exist",
+                    "Merging all columns into one file",
+                    "Dropping duplicates"
+                ],
+                "answer": "Checking if the directory/files exist"
+            }
         ];
 
         let currentQuestionIndex = 0;
@@ -103,11 +131,11 @@
             const question = quizQuestions[currentQuestionIndex];
 
             quizContainer.innerHTML = `
-                <div class="question">${currentQuestionIndex + 1}. ${question.question}</div>
+                <div class="question">${question.question}</div>
                 <ul class="options">
                     ${question.options
                         .map(
-                            (option, index) => `
+                            (option) => `
                                 <li>
                                     <label>
                                         <input type="radio" name="option" value="${option}" />
@@ -132,19 +160,21 @@
         function showResult() {
             quizContainer.style.display = 'none';
             nextButton.style.display = 'none';
-            resultContainer.innerHTML = `🎯 Quiz Completed! Your score is: ${score}/${quizQuestions.length}`;
+            resultContainer.innerHTML = `🎯 Warm-Up Quiz Completed! Your score is: ${score}/${quizQuestions.length}`;
             if (score === quizQuestions.length) {
-                resultContainer.innerHTML += '<br>🏆 Congratulations! You are a Quiz Master!';
+                resultContainer.innerHTML += '<br>🏆 Perfect! You\'re ready for Session 3!';
             } else if (score >= quizQuestions.length / 2) {
-                resultContainer.innerHTML += '<br>🎖️ Well done! Keep it up!';
+                resultContainer.innerHTML += '<br>🎖️ Good job! A quick review will help you excel further.';
             } else {
-                resultContainer.innerHTML += '<br>💪 Keep practicing to improve!';
+                resultContainer.innerHTML += '<br>💪 Keep practicing! Go over the Session 2 materials again if needed.';
             }
         }
 
         nextButton.addEventListener('click', () => {
             const selectedOption = document.querySelector('input[name="option"]:checked');
-            if (selectedOption.value === quizQuestions[currentQuestionIndex].answer) {
+            const question = quizQuestions[currentQuestionIndex];
+
+            if (selectedOption && selectedOption.value === question.answer) {
                 score++;
             }
 
