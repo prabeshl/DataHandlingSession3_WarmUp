@@ -3,139 +3,444 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Session 3 Warm-Up Quiz</title>
+    <title>PrabeshQuiz</title>
     <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
         body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
             margin: 0;
             padding: 20px;
             display: flex;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
+            color: #333;
+            line-height: 1.5;
         }
+        
         .quiz-container {
             background: #fff;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            padding: 20px;
-            max-width: 600px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            padding: 25px;
+            max-width: 700px;
             width: 100%;
+            transition: all 0.3s ease;
         }
+        
         .question {
-            font-size: 18px;
+            font-size: clamp(18px, 4vw, 22px);
             margin-bottom: 20px;
+            font-weight: 600;
+            color: #2c3e50;
+            line-height: 1.4;
         }
+        
         .options {
             list-style-type: none;
             padding: 0;
         }
+        
         .options li {
-            margin-bottom: 10px;
+            margin-bottom: 12px;
+            padding: 12px;
+            border-radius: 8px;
+            transition: background-color 0.2s;
+            border: 1px solid #e0e0e0;
         }
+        
+        .options li:hover {
+            background-color: #f5f9ff;
+        }
+        
+        .options label {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            font-size: clamp(16px, 3.5vw, 18px);
+        }
+        
         .options input {
-            margin-right: 10px;
+            margin-right: 12px;
+            transform: scale(1.2);
+            min-width: 18px;
         }
+        
         .btn {
             display: inline-block;
-            padding: 10px 20px;
+            padding: 12px 25px;
             font-size: 16px;
+            font-weight: 600;
             color: #fff;
-            background-color: #007BFF;
+            background: linear-gradient(to right, #2575fc, #6a11cb);
             border: none;
-            border-radius: 5px;
+            border-radius: 8px;
             cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 4px 10px rgba(106, 17, 203, 0.3);
+            width: 100%;
+            max-width: 200px;
         }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(106, 17, 203, 0.4);
+        }
+        
         .btn:disabled {
-            background-color: #ccc;
+            background: #bdc3c7;
             cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
         }
+        
         .score {
-            font-size: 20px;
+            font-size: clamp(20px, 5vw, 24px);
+            margin: 20px 0;
+            text-align: center;
+            font-weight: 700;
+            color: #2c3e50;
+        }
+        
+        .feedback-container {
+            margin-top: 25px;
+            border-top: 2px solid #ecf0f1;
+            padding-top: 20px;
+        }
+        
+        .feedback-item {
+            margin-bottom: 20px;
+            padding: 15px;
+            border-radius: 10px;
+            background-color: #f8f9fa;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+        }
+        
+        .feedback-question {
+            font-weight: 600;
+            margin-bottom: 12px;
+            color: #2c3e50;
+            font-size: clamp(16px, 3.5vw, 18px);
+        }
+        
+        .feedback-answer {
+            display: flex;
+            flex-direction: column;
+            margin: 8px 0;
+            padding: 10px;
+            border-radius: 5px;
+            font-size: clamp(14px, 3vw, 16px);
+        }
+        
+        .correct {
+            background-color: #d4edda;
+            color: #155724;
+            border-left: 4px solid #28a745;
+        }
+        
+        .incorrect {
+            background-color: #f8d7da;
+            color: #721c24;
+            border-left: 4px solid #dc3545;
+        }
+        
+        .feedback-label {
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+        
+        .progress-bar {
+            height: 8px;
+            background-color: #ecf0f1;
+            border-radius: 4px;
+            margin: 20px 0;
+            overflow: hidden;
+        }
+        
+        .progress {
+            height: 100%;
+            background: linear-gradient(to right, #2575fc, #6a11cb);
+            border-radius: 4px;
+            transition: width 0.5s ease;
+        }
+        
+        .question-counter {
+            text-align: right;
+            color: #7f8c8d;
+            margin-bottom: 10px;
+            font-size: clamp(14px, 3vw, 16px);
+        }
+        
+        .result-emoji {
+            font-size: clamp(30px, 8vw, 40px);
+            text-align: center;
+            margin: 10px 0;
+        }
+        
+        .restart-btn {
+            display: block;
+            margin: 20px auto 0;
+            background: linear-gradient(to right, #00b09b, #96c93d);
+            max-width: 250px;
+        }
+        
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-size: clamp(24px, 5vw, 32px);
+        }
+        
+        .quiz-description {
+            text-align: center;
+            color: #7f8c8d;
+            margin-bottom: 25px;
+            font-size: clamp(14px, 3vw, 16px);
+        }
+        
+        .btn-container {
+            display: flex;
+            justify-content: center;
             margin-top: 20px;
+        }
+        
+        .shuffle-info {
+            text-align: center;
+            color: #6c757d;
+            font-size: 14px;
+            margin-top: 10px;
+            font-style: italic;
+        }
+        
+        /* Mobile-specific adjustments */
+        @media (max-width: 768px) {
+            body {
+                padding: 15px;
+            }
+            
+            .quiz-container {
+                padding: 20px 15px;
+                border-radius: 10px;
+            }
+            
+            .options li {
+                padding: 10px;
+                margin-bottom: 10px;
+            }
+            
+            .feedback-item {
+                padding: 12px;
+                margin-bottom: 15px;
+            }
+            
+            .feedback-answer {
+                padding: 8px;
+            }
+            
+            .btn {
+                padding: 10px 20px;
+                font-size: 15px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            body {
+                padding: 10px;
+            }
+            
+            .quiz-container {
+                padding: 15px 10px;
+            }
+            
+            .options li {
+                padding: 8px;
+            }
+            
+            .feedback-item {
+                padding: 10px;
+            }
+            
+            .question-counter {
+                text-align: center;
+            }
+            
+            .feedback-answer {
+                flex-direction: column;
+            }
+            
+            .feedback-label {
+                min-width: auto;
+                margin-bottom: 5px;
+            }
+        }
+        
+        /* Large screen adjustments */
+        @media (min-width: 1200px) {
+            .quiz-container {
+                max-width: 800px;
+                padding: 30px;
+            }
         }
     </style>
 </head>
 <body>
     <div class="quiz-container">
+        <h1 id="quiz-title">Quiz Title</h1>
+        <p id="quiz-description" class="quiz-description">Quiz Description</p>
+        <div class="shuffle-info">Practice is the path to excellence - every line of code moves you forward</div>
+        
+        <div class="question-counter">
+            Question <span id="current-question">1</span> of <span id="total-questions">0</span>
+        </div>
+        <div class="progress-bar">
+            <div class="progress" id="progress" style="width: 0%"></div>
+        </div>
+        
         <div id="quiz">
             <!-- Quiz content will be injected here -->
         </div>
-        <button id="next-btn" class="btn" disabled>Next</button>
+        <div class="btn-container">
+            <button id="next-btn" class="btn" disabled>Next Question</button>
+        </div>
         <div id="result" class="score"></div>
     </div>
 
     <script>
-        const quizQuestions = [
-            {
-                "question": "1. What does transposing a dataset typically achieve?",
-                "options": [
-                    "Merges two DataFrames",
-                    "Switches rows and columns",
-                    "Deletes missing data",
-                    "Sorts rows in ascending order"
-                ],
-                "answer": "Switches rows and columns"
-            },
-            {
-                "question": "2. Which method can be used to combine DataFrames by keys?",
-                "options": [
-                    "pd.transpose()",
-                    "pd.merge()",
-                    "df.sort_values()",
-                    "df.dropna()"
-                ],
-                "answer": "pd.merge()"
-            },
-            {
-                "question": "3. What is the purpose of grouping data by a column?",
-                "options": [
-                    "Drop rows with NaN values",
-                    "Create bar charts",
-                    "Perform aggregations (like sum or mean) by category",
-                    "Filter specific rows"
-                ],
-                "answer": "Perform aggregations (like sum or mean) by category"
-            },
-            {
-                "question": "4. Which of the following best describes a vectorized operation?",
-                "options": [
-                    "An operation that loops over rows explicitly",
-                    "A single operation applied element-wise without explicit Python loops",
-                    "A function that sorts rows in the DataFrame",
-                    "An operation that always produces a pivot table"
-                ],
-                "answer": "A single operation applied element-wise without explicit Python loops"
-            },
-            {
-                "question": "5. In a loop processing multiple files, what is a common first step?",
-                "options": [
-                    "Writing a pivot table",
-                    "Checking if the directory/files exist",
-                    "Merging all columns into one file",
-                    "Dropping duplicates"
-                ],
-                "answer": "Checking if the directory/files exist"
-            }
-        ];
+        // ============================================
+        // QUIZ CONFIGURATION - EDIT THIS SECTION ONLY
+        // ============================================
+        const quizConfig = {
+            // Page title (shown in browser tab)
+            pageTitle: "Topic 3 Warm-Up",
+            
+            // Quiz title (shown on the page)
+            quizTitle: "Combining Summarizing Data",
+            
+            // Quiz description
+            quizDescription: "Test your knowledge of merge and data manipulation techniques",
+            
+            // Quiz questions array
+            questions: [
+    {
+    question: "What does transposing a dataset typically achieve?",
+    options: [
+        "Merges two DataFrames",
+        "Switches rows and columns",
+        "Deletes missing data",
+        "Sorts rows in ascending order"
+    ],
+    answer: "Switches rows and columns",
+    explanation: "Transposing (often using .T in pandas) converts rows to columns and columns to rows, effectively rotating the dataset 90 degrees."
+},
+{
+    question: "Which method can be used to combine DataFrames by keys?",
+    options: [
+        "pd.transpose()",
+        "pd.merge()",
+        "df.sort_values()",
+        "df.dropna()"
+    ],
+    answer: "pd.merge()",
+    explanation: "pd.merge() combines DataFrames based on common columns (keys), similar to SQL JOIN operations, allowing different types of joins like inner, outer, left, and right."
+},
+{
+    question: "What is the purpose of grouping data by a column?",
+    options: [
+        "Drop rows with NaN values",
+        "Create bar charts",
+        "Perform aggregations (like sum or mean) by category",
+        "Filter specific rows"
+    ],
+    answer: "Perform aggregations (like sum or mean) by category",
+    explanation: "Grouping data (using groupby()) splits the data into groups based on column values, allowing you to apply aggregate functions to each group separately."
+},
+{
+    question: "Which of the following best describes a vectorized operation?",
+    options: [
+        "An operation that loops over rows explicitly",
+        "A single operation applied element-wise without explicit Python loops",
+        "A function that sorts rows in the DataFrame",
+        "An operation that always produces a pivot table"
+    ],
+    answer: "A single operation applied element-wise without explicit Python loops",
+    explanation: "Vectorized operations use optimized, low-level implementations that process entire arrays at once, making them much faster than explicit Python loops."
+},
+{
+    question: "In a loop processing multiple files, what is a common first step?",
+    options: [
+        "Writing a pivot table",
+        "Checking if the directory/files exist",
+        "Merging all columns into one file",
+        "Dropping duplicates"
+    ],
+    answer: "Checking if the directory/files exist",
+    explanation: "Before processing files, it's essential to verify that the target directory and files exist to avoid FileNotFound errors and ensure the program runs smoothly."
+}
+]
+        };
+        // ============================================
+        // DO NOT EDIT
+        // ============================================
 
+        // Shuffle helper function
+        function shuffleArray(arr) {
+            for (let i = arr.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [arr[i], arr[j]] = [arr[j], arr[i]];
+            }
+            return arr;
+        }
+
+        // Set page title
+        document.title = quizConfig.pageTitle;
+        
+        // Set quiz title and description
+        document.getElementById('quiz-title').textContent = quizConfig.quizTitle;
+        document.getElementById('quiz-description').textContent = quizConfig.quizDescription;
+
+        // Quiz variables
         let currentQuestionIndex = 0;
         let score = 0;
+        let userAnswers = [];
 
+        // DOM elements
         const quizContainer = document.getElementById('quiz');
         const nextButton = document.getElementById('next-btn');
         const resultContainer = document.getElementById('result');
+        const currentQuestionElement = document.getElementById('current-question');
+        const totalQuestionsElement = document.getElementById('total-questions');
+        const progressElement = document.getElementById('progress');
 
+        // Initialize total questions display
+        totalQuestionsElement.textContent = quizConfig.questions.length;
+
+        // Shuffle questions initially
+        shuffleArray(quizConfig.questions);
+
+        // Display the current question with shuffled options
         function displayQuestion() {
-            const question = quizQuestions[currentQuestionIndex];
+            const question = quizConfig.questions[currentQuestionIndex];
+            currentQuestionElement.textContent = currentQuestionIndex + 1;
+            
+            // Update progress bar
+            const progressPercentage = ((currentQuestionIndex + 1) / quizConfig.questions.length) * 100;
+            progressElement.style.width = `${progressPercentage}%`;
+
+            // Shuffle the options for this question
+            const shuffledOptions = shuffleArray([...question.options]);
 
             quizContainer.innerHTML = `
                 <div class="question">${question.question}</div>
                 <ul class="options">
-                    ${question.options
+                    ${shuffledOptions
                         .map(
-                            (option) => `
+                            (option, index) => `
                                 <li>
                                     <label>
                                         <input type="radio" name="option" value="${option}" />
@@ -157,29 +462,91 @@
             });
         }
 
+        // Show results with detailed feedback
         function showResult() {
             quizContainer.style.display = 'none';
             nextButton.style.display = 'none';
-            resultContainer.innerHTML = `🎯 Warm-Up Quiz Completed! Your score is: ${score}/${quizQuestions.length}`;
-            if (score === quizQuestions.length) {
-                resultContainer.innerHTML += '<br>🏆 Perfect! You\'re ready for Session 3!';
-            } else if (score >= quizQuestions.length / 2) {
-                resultContainer.innerHTML += '<br>🎖️ Good job! A quick review will help you excel further.';
-            } else {
-                resultContainer.innerHTML += '<br>💪 Keep practicing! Go over the Session 2 materials again if needed.';
+            
+            // Determine emoji based on score
+            let emoji = "😞";
+            let message = "Keep practicing to improve!";
+            
+            if (score === quizConfig.questions.length) {
+                emoji = "🏆";
+                message = "Congratulations! You are a Quiz Master!";
+            } else if (score >= quizConfig.questions.length / 2) {
+                emoji = "🎉";
+                message = "Well done! Keep it up!";
             }
+            
+            resultContainer.innerHTML = `
+                <div class="result-emoji">${emoji}</div>
+                <div class="score">Your score: ${score}/${quizConfig.questions.length}</div>
+                <div style="text-align: center; margin-bottom: 20px; font-size: clamp(16px, 3.5vw, 18px);">${message}</div>
+                <div class="feedback-container">
+                    <h2 style="text-align: center; color: #2c3e50; margin-bottom: 20px; font-size: clamp(18px, 4vw, 22px);">Detailed Feedback</h2>
+                    ${userAnswers.map((item, index) => {
+                        const isCorrect = item.userAnswer === item.correctAnswer;
+                        return `
+                            <div class="feedback-item">
+                                <div class="feedback-question">${index + 1}. ${item.question}</div>
+                                <div class="feedback-answer ${isCorrect ? 'correct' : 'incorrect'}">
+                                    <span class="feedback-label">Your answer:</span> ${item.userAnswer || "Not answered"}
+                                </div>
+                                <div class="feedback-answer correct">
+                                    <span class="feedback-label">Correct answer:</span> ${item.correctAnswer}
+                                </div>
+                                <div style="margin-top: 10px; font-style: italic; color: #7f8c8d; font-size: clamp(14px, 3vw, 16px);"> Explanation: ${item.explanation}</div>
+
+                            </div>
+                        `;
+                    }).join('')}
+                </div>
+                <div class="btn-container">
+                    <button id="restart-btn" class="btn restart-btn">Take Quiz Again</button>
+                </div>
+            `;
+            
+            // Add event listener for restart button
+            document.getElementById('restart-btn').addEventListener('click', restartQuiz);
         }
 
+        // Restart the quiz with new randomization
+        function restartQuiz() {
+            currentQuestionIndex = 0;
+            score = 0;
+            userAnswers = [];
+            
+            // Reshuffle questions for a new order
+            shuffleArray(quizConfig.questions);
+            
+            quizContainer.style.display = 'block';
+            nextButton.style.display = 'inline-block';
+            resultContainer.innerHTML = '';
+            displayQuestion();
+        }
+
+        // Next button event listener
         nextButton.addEventListener('click', () => {
             const selectedOption = document.querySelector('input[name="option"]:checked');
-            const question = quizQuestions[currentQuestionIndex];
-
-            if (selectedOption && selectedOption.value === question.answer) {
+            const userAnswer = selectedOption ? selectedOption.value : null;
+            const correctAnswer = quizConfig.questions[currentQuestionIndex].answer;
+            const explanation = quizConfig.questions[currentQuestionIndex].explanation;
+            
+            // Store user's answer and correct answer
+            userAnswers.push({
+                question: quizConfig.questions[currentQuestionIndex].question,
+                userAnswer: userAnswer,
+                correctAnswer: correctAnswer,
+                explanation: explanation
+            });
+            
+            if (userAnswer === correctAnswer) {
                 score++;
             }
 
             currentQuestionIndex++;
-            if (currentQuestionIndex < quizQuestions.length) {
+            if (currentQuestionIndex < quizConfig.questions.length) {
                 displayQuestion();
             } else {
                 showResult();
